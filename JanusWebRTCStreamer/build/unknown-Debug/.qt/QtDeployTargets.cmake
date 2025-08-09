@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_CameraStreamingApp_FILE /Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/build/unknown-Debug/CameraStreamingApp)
+set(__QT_DEPLOY_TARGET_CameraStreamingApp_TYPE EXECUTABLE)
