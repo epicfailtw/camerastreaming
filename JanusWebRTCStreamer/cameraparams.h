@@ -10,13 +10,13 @@ struct CameraParams {
     QString applianceName;   // school
     QString cameraId;
     QString roomName;        // camera name
-    QString ipPort;
+    QString ip;
     QString rtspUrl;         // constructed from IP:PORT
     QString rtspUser = "admin";
     QString rtspPassword = "Kloud123";
 
     bool isValid() const {
-        return !cameraUUID.isEmpty() && !ipPort.isEmpty();
+        return !cameraUUID.isEmpty() && !ip.isEmpty();
     }
 };
 

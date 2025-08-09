@@ -42,6 +42,9 @@ set(RESOURCES
 
 # Create executable
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UI_FILES} ${RESOURCES}
+
+
+
 )
 
 # Link Qt libraries

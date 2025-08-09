@@ -154,7 +154,7 @@ CameraParams HttpServer::parsePostRequest(const QString &request, const QString 
     params.applianceName = jsonObj["appliance_name"].toString();
     params.cameraId = jsonObj["camera_id"].toString();
     params.roomName = jsonObj["room_name"].toString();
-    params.ipPort = jsonObj["ip_port"].toString();
+    params.ip = jsonObj["ip"].toString();
 
     // Optional RTSP credentials
     if (jsonObj.contains("rtsp_user")) {
@@ -165,16 +165,8 @@ CameraParams HttpServer::parsePostRequest(const QString &request, const QString 
     }
 
     // Construct RTSP URL
-    if (!params.ipPort.isEmpty()) {
-
-        params.rtspUrl = QString("rtsp://%1/main").arg(params.ipPort);
-        // QStringList parts = params.ipPort.split(":");
-        // if (parts.size() == 2) {
-        //     QString ip = parts[0];
-        //     QString port = parts[1];
-        //     params.rtspUrl = QString("rtsp://%1:%2@%3:%4/main")
-        //                          .arg(params.rtspUser, params.rtspPassword, ip, port);
-        // }
+    if (!params.ip.isEmpty()) {
+        params.rtspUrl = QString("rtsp://%1/main").arg(params.ip);
     }
 
     return params;
