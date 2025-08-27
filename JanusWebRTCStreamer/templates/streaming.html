@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ROOM_NAME}} Live Stream</title>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 80px);
+            gap: 0;
+        }
+
+        .video-section {
+            flex: 0 0 65%;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .output-section {
+            flex: 0 0 35%;
+            background: rgba(0,0,0,0.4);
+            border-left: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .status-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .status {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .info-panel {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .info-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffeb3b;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .info-label {
+            color: #e0e0e0;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #ffffff;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .debug-panel {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .debug-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #4caf50;
+        }
+
+        .debug-log {
+            flex: 1;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            overflow-y: auto;
+            color: #e0e0e0;
+        }
+
+        .log-entry {
+            margin: 2px 0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .log-success {
+            color: #4caf50;
+        }
+
+        .log-error {
+            color: #f44336;
+        }
+
+        .log-warning {
+            color: #ff9800;
+        }
+
+        .log-info {
+            color: #2196f3;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .video-section {
+                flex: 0 0 60%;
+            }
+
+            .output-section {
+                flex: 0 0 40%;
+                border-left: none;
+                border-top: 2px solid rgba(255,255,255,0.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>🎥 {{CUSTOMER_NAME}} - {{APPLIANCE_NAME}}</h2>
+    </div>
+
+    <div class="main-container">
+        <div class="video-section">
+            <div class="video-container">
+                <video id="remotevideo" autoplay playsinline muted controls></video>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div class="status-panel">
+                <div id="status" class="status">🔥 Connecting to live stream...</div>
+            </div>
+
+            <div class="info-panel">
+                <div class="info-title">📊 Connection Info</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Server</div>
+                        <div class="info-value">{{JANUS_URL}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Session</div>
+                        <div class="info-value" id="session-id">Connecting...</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Handle</div>
+                        <div class="info-value" id="handle-id">Connecting...</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Stream ID</div>
+                        <div class="info-value">{{MOUNTPOINT_ID}}</div>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Video State</div>
+                        <div class="info-value" id="video-state">Initializing</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">WebRTC</div>
+                        <div class="info-value" id="webrtc-state">Disconnected</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="debug-panel">
+                <div class="debug-title">🔍 Debug Log</div>
+                <div id="debug-log" class="debug-log">
+                    <div class="log-entry">System initializing...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script>{{JANUS_JS_CONTENT}}</script>
+    <script>{{WEBRTC_SCRIPT}}</script>
+</body>
+</html>

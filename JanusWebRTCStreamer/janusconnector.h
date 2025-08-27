@@ -17,6 +17,7 @@
 #include <QWebEnginePage>
 #include <QDir>
 #include <QThread>
+#include "templateloader.h"
 
 class JanusConnector : public QObject
 {

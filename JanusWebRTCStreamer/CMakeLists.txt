@@ -19,6 +19,7 @@ set(SOURCES
     httpserver.cpp
     janusconnector.cpp
     cameramanager.cpp
+    templateloader.cpp
 )
 
 # Header files
@@ -28,6 +29,7 @@ set(HEADERS
     httpserver.h
     janusconnector.h
     cameramanager.h
+    templateloader.h
 )
 
 # UI files (if you have any)
@@ -42,6 +44,7 @@ set(RESOURCES
 
 # Create executable
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UI_FILES} ${RESOURCES}
+    templateloader.h templateloader.cpp
 
 
 
