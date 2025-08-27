@@ -7,7 +7,12 @@
 	"CROSS_CONFIG" : false,
 	"GENERATOR" : "Unix Makefiles",
 	"INCLUDE_DIR" : "/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/build/unknown-Debug/CameraStreamingApp_autogen/include",
-	"INPUTS" : [ "/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/scripts/janus.js" ],
+	"INPUTS" : 
+	[
+		"/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/templates/streaming.html",
+		"/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/scripts/janus.js",
+		"/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/scripts/web-rtc.js"
+	],
 	"LOCK_FILE" : "/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/build/unknown-Debug/CMakeFiles/CameraStreamingApp_autogen.dir/AutoRcc_resources_EWIEGA46WW_Lock.lock",
 	"MULTI_CONFIG" : false,
 	"OPTIONS" : [ "-name", "resources" ],

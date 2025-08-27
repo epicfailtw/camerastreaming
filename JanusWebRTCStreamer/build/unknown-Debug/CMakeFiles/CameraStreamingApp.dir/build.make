@@ -78,7 +78,9 @@ CameraStreamingApp_autogen/timestamp: CMakeFiles/CameraStreamingApp.dir/compiler
 
 CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: /Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/resources.qrc
 CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: CMakeFiles/CameraStreamingApp_autogen.dir/AutoRcc_resources_EWIEGA46WW_Info.json
+CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: /Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/templates/streaming.html
 CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: /Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/scripts/janus.js
+CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: /Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/scripts/web-rtc.js
 CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: /opt/homebrew/share/qt/libexec/rcc
 CameraStreamingApp_autogen/EWIEGA46WW/qrc_resources.cpp: /opt/homebrew/share/qt/libexec/rcc
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/build/unknown-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic RCC for resources.qrc"
