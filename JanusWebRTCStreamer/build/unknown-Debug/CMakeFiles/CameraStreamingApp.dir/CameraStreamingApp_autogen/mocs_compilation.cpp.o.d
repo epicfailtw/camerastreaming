@@ -817,6 +817,8 @@ CMakeFiles/CameraStreamingApp.dir/CameraStreamingApp_autogen/mocs_compilation.cp
   /opt/homebrew/include/QtCore/qset.h \
   /opt/homebrew/include/QtCore/qhash.h \
   /opt/homebrew/include/QtCore/qvarlengtharray.h \
+  /opt/homebrew/lib/QtCore.framework/Headers/QMap \
+  /opt/homebrew/lib/QtCore.framework/Headers/qmap.h \
   /Users/denischibisov/ITDLS/QT/JanusWebRTCStreamer/build/unknown-Debug/CameraStreamingApp_autogen/EWIEGA46WW/../../../../httpserver.h \
   /opt/homebrew/lib/QtNetwork.framework/Headers/QHostAddress \
   /opt/homebrew/lib/QtNetwork.framework/Headers/qhostaddress.h \
@@ -1054,6 +1056,10 @@ CMakeFiles/CameraStreamingApp.dir/CameraStreamingApp_autogen/mocs_compilation.cp
   /opt/homebrew/include/QtCore/qfile.h \
   /opt/homebrew/include/QtCore/qfileinfo.h \
   /opt/homebrew/include/QtCore/qtimezone.h \
+  /opt/homebrew/lib/QtCore.framework/Headers/QThread \
+  /opt/homebrew/lib/QtCore.framework/Headers/qthread.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/future \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread \
   /opt/homebrew/include/QtNetwork/QSslError \
   /opt/homebrew/lib/QtNetwork.framework/Headers/qsslerror.h \
   /opt/homebrew/include/QtCore/qtmochelpers.h \

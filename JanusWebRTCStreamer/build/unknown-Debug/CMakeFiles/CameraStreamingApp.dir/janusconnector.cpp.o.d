@@ -1043,4 +1043,8 @@ CMakeFiles/CameraStreamingApp.dir/janusconnector.cpp.o: \
   /opt/homebrew/include/QtCore/qdirlisting.h \
   /opt/homebrew/include/QtCore/qfile.h \
   /opt/homebrew/include/QtCore/qfileinfo.h \
-  /opt/homebrew/include/QtCore/qtimezone.h
+  /opt/homebrew/include/QtCore/qtimezone.h \
+  /opt/homebrew/lib/QtCore.framework/Headers/QThread \
+  /opt/homebrew/lib/QtCore.framework/Headers/qthread.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/future \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread

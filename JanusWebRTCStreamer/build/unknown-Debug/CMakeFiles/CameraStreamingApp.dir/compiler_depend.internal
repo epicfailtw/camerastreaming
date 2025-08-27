@@ -596,6 +596,7 @@
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/exception
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/filesystem
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/functional
+ /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/future
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/initializer_list
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/iomanip
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/ios
@@ -620,6 +621,7 @@
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/string
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/string_view
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/system_error
+ /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/thread
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/tuple
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/type_traits
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/typeinfo
@@ -835,11 +837,13 @@
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QJsonParseError
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QJsonValue
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QList
+ /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QMap
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QMetaType
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QObject
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QSharedDataPointer
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QSizeF
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QString
+ /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QThread
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QTimer
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QUrl
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/QVariant
@@ -976,6 +980,7 @@
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qtenvironmentvariables.h
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qtextstream.h
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qtformat_impl.h
+ /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qthread.h
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qtimer.h
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qtimezone.h
  /opt/homebrew/Cellar/qt/6.9.1/lib/QtCore.framework/Versions/A/Headers/qtmetamacros.h
@@ -2717,6 +2722,7 @@ CMakeFiles/CameraStreamingApp.dir/CameraStreamingApp_autogen/mocs_compilation.cp
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/exception
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/filesystem
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/functional
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/future
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/initializer_list
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/ios
@@ -2749,6 +2755,7 @@ CMakeFiles/CameraStreamingApp.dir/CameraStreamingApp_autogen/mocs_compilation.cp
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string_view
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/system_error
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/tuple
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/type_traits
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/typeinfo
@@ -3140,8 +3147,10 @@ CMakeFiles/CameraStreamingApp.dir/CameraStreamingApp_autogen/mocs_compilation.cp
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonDocument
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonObject
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonParseError
+ /opt/homebrew/lib/QtCore.framework/Headers/QMap
  /opt/homebrew/lib/QtCore.framework/Headers/QObject
  /opt/homebrew/lib/QtCore.framework/Headers/QString
+ /opt/homebrew/lib/QtCore.framework/Headers/QThread
  /opt/homebrew/lib/QtCore.framework/Headers/QTimer
  /opt/homebrew/lib/QtCore.framework/Headers/qdatetime.h
  /opt/homebrew/lib/QtCore.framework/Headers/qdebug.h
@@ -3154,12 +3163,14 @@ CMakeFiles/CameraStreamingApp.dir/CameraStreamingApp_autogen/mocs_compilation.cp
  /opt/homebrew/lib/QtCore.framework/Headers/qjsonparseerror.h
  /opt/homebrew/lib/QtCore.framework/Headers/qjsonvalue.h
  /opt/homebrew/lib/QtCore.framework/Headers/qlist.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qmap.h
  /opt/homebrew/lib/QtCore.framework/Headers/qmetatype.h
  /opt/homebrew/lib/QtCore.framework/Headers/qobject.h
  /opt/homebrew/lib/QtCore.framework/Headers/qshareddata.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsharedpointer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsize.h
  /opt/homebrew/lib/QtCore.framework/Headers/qstring.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qthread.h
  /opt/homebrew/lib/QtCore.framework/Headers/qtimer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qurl.h
  /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h
@@ -3788,6 +3799,7 @@ CMakeFiles/CameraStreamingApp.dir/cameramanager.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/exception
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/filesystem
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/functional
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/future
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/initializer_list
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/ios
@@ -3820,6 +3832,7 @@ CMakeFiles/CameraStreamingApp.dir/cameramanager.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string_view
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/system_error
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/tuple
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/type_traits
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/typeinfo
@@ -4200,8 +4213,10 @@ CMakeFiles/CameraStreamingApp.dir/cameramanager.cpp.o
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonDocument
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonObject
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonParseError
+ /opt/homebrew/lib/QtCore.framework/Headers/QMap
  /opt/homebrew/lib/QtCore.framework/Headers/QObject
  /opt/homebrew/lib/QtCore.framework/Headers/QString
+ /opt/homebrew/lib/QtCore.framework/Headers/QThread
  /opt/homebrew/lib/QtCore.framework/Headers/QTimer
  /opt/homebrew/lib/QtCore.framework/Headers/qdatetime.h
  /opt/homebrew/lib/QtCore.framework/Headers/qdebug.h
@@ -4214,12 +4229,14 @@ CMakeFiles/CameraStreamingApp.dir/cameramanager.cpp.o
  /opt/homebrew/lib/QtCore.framework/Headers/qjsonparseerror.h
  /opt/homebrew/lib/QtCore.framework/Headers/qjsonvalue.h
  /opt/homebrew/lib/QtCore.framework/Headers/qlist.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qmap.h
  /opt/homebrew/lib/QtCore.framework/Headers/qmetatype.h
  /opt/homebrew/lib/QtCore.framework/Headers/qobject.h
  /opt/homebrew/lib/QtCore.framework/Headers/qshareddata.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsharedpointer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsize.h
  /opt/homebrew/lib/QtCore.framework/Headers/qstring.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qthread.h
  /opt/homebrew/lib/QtCore.framework/Headers/qtimer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qurl.h
  /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h
@@ -5704,6 +5721,7 @@ CMakeFiles/CameraStreamingApp.dir/janusconnector.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/exception
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/filesystem
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/functional
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/future
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/initializer_list
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/ios
@@ -5736,6 +5754,7 @@ CMakeFiles/CameraStreamingApp.dir/janusconnector.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string_view
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/system_error
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/tuple
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/type_traits
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/typeinfo
@@ -6115,6 +6134,7 @@ CMakeFiles/CameraStreamingApp.dir/janusconnector.cpp.o
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonObject
  /opt/homebrew/lib/QtCore.framework/Headers/QObject
  /opt/homebrew/lib/QtCore.framework/Headers/QString
+ /opt/homebrew/lib/QtCore.framework/Headers/QThread
  /opt/homebrew/lib/QtCore.framework/Headers/QTimer
  /opt/homebrew/lib/QtCore.framework/Headers/qdatetime.h
  /opt/homebrew/lib/QtCore.framework/Headers/qdebug.h
@@ -6132,6 +6152,7 @@ CMakeFiles/CameraStreamingApp.dir/janusconnector.cpp.o
  /opt/homebrew/lib/QtCore.framework/Headers/qsharedpointer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsize.h
  /opt/homebrew/lib/QtCore.framework/Headers/qstring.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qthread.h
  /opt/homebrew/lib/QtCore.framework/Headers/qtimer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qurl.h
  /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h
@@ -6751,6 +6772,7 @@ CMakeFiles/CameraStreamingApp.dir/main.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/exception
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/filesystem
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/functional
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/future
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/initializer_list
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/ios
@@ -6783,6 +6805,7 @@ CMakeFiles/CameraStreamingApp.dir/main.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string_view
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/system_error
+ /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/tuple
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/type_traits
  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/typeinfo
@@ -7173,8 +7196,10 @@ CMakeFiles/CameraStreamingApp.dir/main.cpp.o
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonObject
  /opt/homebrew/lib/QtCore.framework/Headers/QJsonParseError
  /opt/homebrew/lib/QtCore.framework/Headers/QLoggingCategory
+ /opt/homebrew/lib/QtCore.framework/Headers/QMap
  /opt/homebrew/lib/QtCore.framework/Headers/QObject
  /opt/homebrew/lib/QtCore.framework/Headers/QString
+ /opt/homebrew/lib/QtCore.framework/Headers/QThread
  /opt/homebrew/lib/QtCore.framework/Headers/QTimer
  /opt/homebrew/lib/QtCore.framework/Headers/qdatetime.h
  /opt/homebrew/lib/QtCore.framework/Headers/qdebug.h
@@ -7188,12 +7213,14 @@ CMakeFiles/CameraStreamingApp.dir/main.cpp.o
  /opt/homebrew/lib/QtCore.framework/Headers/qjsonvalue.h
  /opt/homebrew/lib/QtCore.framework/Headers/qlist.h
  /opt/homebrew/lib/QtCore.framework/Headers/qloggingcategory.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qmap.h
  /opt/homebrew/lib/QtCore.framework/Headers/qmetatype.h
  /opt/homebrew/lib/QtCore.framework/Headers/qobject.h
  /opt/homebrew/lib/QtCore.framework/Headers/qshareddata.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsharedpointer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qsize.h
  /opt/homebrew/lib/QtCore.framework/Headers/qstring.h
+ /opt/homebrew/lib/QtCore.framework/Headers/qthread.h
  /opt/homebrew/lib/QtCore.framework/Headers/qtimer.h
  /opt/homebrew/lib/QtCore.framework/Headers/qurl.h
  /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h

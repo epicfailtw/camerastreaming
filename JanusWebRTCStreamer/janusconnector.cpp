@@ -1,5 +1,7 @@
 #include "janusconnector.h"
 
+int JanusConnector::s_nextMountpointId = 1;
+
 JanusConnector::JanusConnector(QObject *parent)
     : QObject(parent)
     , m_networkManager(new QNetworkAccessManager(this))
@@ -11,6 +13,7 @@ JanusConnector::JanusConnector(QObject *parent)
     , m_handleId(0)
     , m_state(Idle)
     , m_currentReply(nullptr)
+    , m_mountpointId(s_nextMountpointId++)
 {
     // Setup network manager
     m_networkManager->setTransferTimeout(10000);// 10 seconds
@@ -57,6 +60,7 @@ void JanusConnector::connectToJanus(const CameraParams &params)
     m_currentParams = params;
     qDebug() << "Connecting to Janus for camera:" << params.cameraUUID;
     qDebug() << "RTSP URL:" << params.rtspUrl;
+    qDebug() << "Using mountpoint ID:" << m_mountpointId;
 
     createJanusSession();
 }
@@ -217,7 +221,7 @@ void JanusConnector::createRTSPMountpoint()
     QJsonObject body;
     body["request"] = "create";
     body["type"] = "rtsp";
-    body["id"] = 1;
+    body["id"] = m_mountpointId;;
     body["name"] = m_currentParams.roomName;
     body["description"] = QString("%1 - %2 Live Stream")
                               .arg(m_currentParams.customerName, m_currentParams.applianceName);
@@ -561,7 +565,7 @@ void JanusConnector::startWebRTCStreaming()
                     </div>
                     <div class="info-item">
                         <div class="info-label">Stream ID</div>
-                        <div class="info-value">1</div>
+                        <div class="info-value">%6</div>
                     </div>
                 </div>
                 <div class="info-grid">
@@ -595,7 +599,7 @@ void JanusConnector::startWebRTCStreaming()
         let janus = null;
         let streaming = null;
         let videoElement = document.getElementById('remotevideo');
-        let id = 1;
+        let id = %6;
         let logCount = 0;
 
         function debugLog(message, type = 'info') {
@@ -785,11 +789,12 @@ void JanusConnector::startWebRTCStreaming()
     </script>
 </body>
 </html>
-    )").arg(m_currentParams.roomName,
-            m_currentParams.customerName,
-            m_currentParams.applianceName,
-            janusJsContent,
-            m_janusUrl);
+    )").arg(m_currentParams.roomName)   // %1
+                              .arg(m_currentParams.customerName) // %2
+                              .arg(m_currentParams.applianceName) // %3
+                              .arg(janusJsContent)               // %4
+                              .arg(m_janusUrl)                   // %5
+                              .arg(m_mountpointId);              // %6
 
     m_webView->setHtml(htmlContent);
     m_webView->show();

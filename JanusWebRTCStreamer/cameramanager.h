@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QMap>
 #include "httpserver.h"
 #include "janusconnector.h"
 #include "cameraparams.h"
@@ -35,11 +36,14 @@ private slots:
     void onStreamingStopped();
     void onJanusError(const QString &error);
     void onHttpServerError(const QString &error);
+    void onConnectorDestroyed();
 
 private:
     HttpServer *m_httpServer;
-    JanusConnector *m_janusConnector;
-    QString m_currentCameraUUID;
+    QMap<QString, JanusConnector*> m_janusConnectors;
+    QString m_janusUrl;
+    //JanusConnector *m_janusConnector;
+    //QString m_currentCameraUUID;
 };
 
 #endif // CAMERAMANAGER_H

@@ -16,6 +16,7 @@
 #include <QWebEngineSettings>
 #include <QWebEnginePage>
 #include <QDir>
+#include <QThread>
 
 class JanusConnector : public QObject
 {
@@ -91,6 +92,10 @@ private:
 
     // Request tracking
     QNetworkReply *m_currentReply;
+
+    // ADDED for unique mountpoint IDs
+    static int s_nextMountpointId;
+    int m_mountpointId;
 };
 
 #endif // JANUSCONNECTOR_H

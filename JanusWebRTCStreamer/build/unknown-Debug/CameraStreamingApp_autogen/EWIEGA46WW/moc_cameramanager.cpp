@@ -54,7 +54,8 @@ template <> constexpr inline auto CameraManager::qt_create_metaobjectdata<qt_met
         "onStreamingStarted",
         "onStreamingStopped",
         "onJanusError",
-        "onHttpServerError"
+        "onHttpServerError",
+        "onConnectorDestroyed"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -90,6 +91,8 @@ template <> constexpr inline auto CameraManager::qt_create_metaobjectdata<qt_met
         QtMocHelpers::SlotData<void(const QString &)>(15, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::QString, 8 },
         }}),
+        // Slot 'onConnectorDestroyed'
+        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -123,6 +126,7 @@ void CameraManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 7: _t->onStreamingStopped(); break;
         case 8: _t->onJanusError((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 9: _t->onHttpServerError((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 10: _t->onConnectorDestroyed(); break;
         default: ;
         }
     }
@@ -159,14 +163,14 @@ int CameraManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

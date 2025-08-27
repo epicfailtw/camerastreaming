@@ -31,16 +31,22 @@ int main(int argc, char *argv[])
     // Connect signals for monitoring
     QObject::connect(&cameraManager, &CameraManager::serviceStarted, []() {
         qDebug() << "Camera streaming service started successfully!";
+        // ADDED info about multi-stream support
+        qDebug() << "Ready to handle multiple camera streams simultaneously";
     });
 
     QObject::connect(&cameraManager, &CameraManager::streamingStarted,
                      [](const QString &cameraUUID) {
                          qDebug() << "Streaming started for camera:" << cameraUUID;
+                         // ADDED debug info
+                         qDebug() << "Stream is now available for viewing";
                      });
 
     QObject::connect(&cameraManager, &CameraManager::streamingStopped,
                      [](const QString &cameraUUID) {
                          qDebug() << "Streaming stopped for camera:" << cameraUUID;
+                         // ADDED debug info
+                         qDebug() << "Stream resources cleaned up";
                      });
 
     QObject::connect(&cameraManager, &CameraManager::errorOccurred,
