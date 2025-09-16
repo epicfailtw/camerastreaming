@@ -33,11 +33,17 @@ bool CameraManager::startService(quint16 httpPort)
         return false;
     }
 
+
     qDebug() << "Camera streaming service started on port:" << httpPort;
     qDebug() << "Send POST requests to: http://localhost:" << httpPort << "/camera/{uuid}";
 
     emit serviceStarted();
     return true;
+}
+
+void CameraManager::setStreamCredentials(const QString &username, const QString &password)
+{
+    m_httpServer->setCredentials(username, password);
 }
 
 void CameraManager::stopService()
@@ -52,13 +58,6 @@ void CameraManager::stopService()
 
     emit serviceStopped();
     qDebug() << "Camera streaming service stopped";
-
-
-    // m_httpServer->stopServer();
-    // m_janusConnector->disconnect();
-
-    // emit serviceStopped();
-    // qDebug() << "Camera streaming service stopped";
 }
 
 void CameraManager::setJanusUrl(const QString &url)
@@ -73,6 +72,9 @@ void CameraManager::onCameraParametersReceived(const CameraParams &params)
 
     // Check if connector already exists**
     if (m_janusConnectors.contains(params.cameraUUID)) {
+
+        //Unregister existing stream
+        m_httpServer->unregisterStream(params.cameraUUID);
         // Stop existing stream
         m_janusConnectors[params.cameraUUID]->disconnect();
         m_janusConnectors[params.cameraUUID]->deleteLater();
@@ -90,6 +92,8 @@ void CameraManager::onCameraParametersReceived(const CameraParams &params)
             this, &CameraManager::onStreamingStopped);
     connect(connector, &JanusConnector::errorOccurred,
             this, &CameraManager::onJanusError);
+    connect(connector, &JanusConnector::sessionReady,
+            this, &CameraManager::onSessionReady);
     connect(connector, &QObject::destroyed,
             this, &CameraManager::onConnectorDestroyed);
 
@@ -110,6 +114,29 @@ void CameraManager::onCameraParametersReceived(const CameraParams &params)
     // m_janusConnector->connectToJanus(params);
 }
 
+void CameraManager::onSessionReady(qint64 sessionId, qint64 handleId)
+{
+    JanusConnector *connector = qobject_cast<JanusConnector*>(sender());
+    if (!connector) return;
+
+    // Find the camera UUID for this connector
+    for (auto it = m_janusConnectors.begin(); it != m_janusConnectors.end(); ++it) {
+        if (it.value() == connector) {
+            // **CHANGED: Get actual mountpoint ID from connector**
+            int mountpointId = connector->mountpointId();
+
+            // **CHANGED: Get actual camera parameters from connector**
+            CameraParams params = connector->currentParams();
+
+            m_httpServer->registerStream(it.key(), params, mountpointId, m_janusUrl);
+            qDebug() << "Stream ready for public access:" << it.key();
+            qDebug() << "Mountpoint ID:" << mountpointId;
+            qDebug("Public URL: http://localhost:8080/stream/%s", it.key().toUtf8().constData());
+            break;
+        }
+    }
+}
+
 void CameraManager::onStreamingStarted()
 {
 
@@ -123,6 +150,9 @@ void CameraManager::onStreamingStarted()
             qDebug() << "Streaming started for camera:" << it.key();
             emit streamingStarted(it.key());
             break;
+        }
+        else {
+            qDebug() << "Stream not found";
         }
     }
     // qDebug() << "Streaming started for camera:" << m_currentCameraUUID;
@@ -140,6 +170,7 @@ void CameraManager::onStreamingStopped()
     for (auto it = m_janusConnectors.begin(); it != m_janusConnectors.end(); ++it) {
         if (it.value() == connector) {
             qDebug() << "Streaming stopped for camera:" << it.key();
+            m_httpServer->unregisterStream(it.key());
             emit streamingStopped(it.key());
             break;
         }
@@ -167,6 +198,7 @@ void CameraManager::onConnectorDestroyed()
     // Remove destroyed connector from map
     for (auto it = m_janusConnectors.begin(); it != m_janusConnectors.end(); ++it) {
         if (it.value() == sender()) {
+            m_httpServer->unregisterStream(it.key());
             m_janusConnectors.erase(it);
             break;
         }

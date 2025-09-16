@@ -24,6 +24,13 @@ public:
     bool isListening() const;
     quint16 serverPort() const;
 
+    void registerStream(const QString &cameraUUID, const CameraParams &params, int mountpointId, const QString &janusUrl);
+    void unregisterStream(const QString &cameraUUID);
+
+    void setCredentials(const QString &username, const QString &password);
+    bool isValidCredentials(const QString &username, const QString &password) const;
+    QMap<QString, QString> parseHttpHeaders(const QString &request);
+
 signals:
     void cameraParametersReceived(const CameraParams &params);
     void serverError(const QString &error);
@@ -37,9 +44,25 @@ private:
                           int statusCode,
                           const QString &statusText,
                           const QByteArray &body);
-    CameraParams parsePostRequest(const QString &request, const QString &uuid);
+
+    void sendHtmlResponse(QTcpSocket *socket, const QString &htmlContent);
+    CameraParams parsePostRequest(const QString &request);
+    void handleGetRequest(QTcpSocket *socket, const QString &path, const QMap<QString, QString> &headers);
+
+    bool checkBasicAuth(const QString &authHeader) const;
+    void sendAuthRequired(QTcpSocket *socket);
 
     QTcpServer *m_tcpServer;
+
+    struct StreamInfo {
+        CameraParams params;
+        int mountpointId;
+        QString janusUrl;
+    };
+    QMap<QString, StreamInfo> m_activeStreams;
+    QString m_username;
+    QString m_password;
+    bool m_authEnabled;
 };
 
 #endif // HTTPSERVER_H

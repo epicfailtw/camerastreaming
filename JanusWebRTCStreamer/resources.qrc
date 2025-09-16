@@ -3,5 +3,7 @@
         <file>scripts/janus.js</file>
         <file>scripts/web-rtc.js</file>
         <file>templates/streaming.html</file>
+        <file>templates/simple_stream.html</file>
+        <file>scripts/simple_stream.js</file>
     </qresource>
 </RCC>

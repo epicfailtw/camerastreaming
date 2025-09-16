@@ -12,11 +12,16 @@ public:
                                       const QString &janusUrl,
                                       int mountpointId,
                                       const QString &janusJsContent);
+    static QString loadSimpleStreamTemplate(const CameraParams &params,
+                                            const QString &janusUrl,
+                                            int mountpointId,
+                                            const QString &janusJsContent);
 
 private:
     static QString loadTemplate(const QString &templatePath);
     static QString processTemplate(const QString &templateContent,
                                    const QMap<QString, QString> &variables);
+
 };
 
 #endif

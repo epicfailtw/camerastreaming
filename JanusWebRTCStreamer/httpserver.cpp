@@ -1,4 +1,5 @@
 #include "httpserver.h"
+#include "janusconnector.h"
 
 HttpServer::HttpServer(QObject *parent)
     : QObject(parent)
@@ -28,7 +29,8 @@ bool HttpServer::startServer(quint16 port)
         return false;
     }
 
-    qDebug() << "HTTP server started on port:" << m_tcpServer->serverPort();
+    //qDebug() << "HTTP server started on port:" << m_tcpServer->serverPort();
+    qDebug() << "Stream URLs: http://localhost:" << port << "/stream/{uuid}";
     return true;
 }
 
@@ -38,6 +40,8 @@ void HttpServer::stopServer()
         m_tcpServer->close();
         qDebug() << "HTTP server stopped";
     }
+
+    m_activeStreams.clear();
 }
 
 bool HttpServer::isListening() const
@@ -48,6 +52,25 @@ bool HttpServer::isListening() const
 quint16 HttpServer::serverPort() const
 {
     return m_tcpServer->serverPort();
+}
+
+
+void HttpServer::registerStream(const QString &cameraUUID, const CameraParams &params, int mountpointId, const QString &janusUrl)
+{
+    StreamInfo info;
+    info.params = params;
+    info.mountpointId = mountpointId;
+    info.janusUrl = janusUrl;
+
+    m_activeStreams[cameraUUID] = info;
+    qDebug() << "Stream registered:" << cameraUUID << "-> mountpoint" << mountpointId;
+}
+
+void HttpServer::unregisterStream(const QString &cameraUUID)
+{
+    if (m_activeStreams.remove(cameraUUID)) {
+        qDebug() << "Stream unregistered:" << cameraUUID;
+    }
 }
 
 void HttpServer::handleNewConnection()
@@ -71,6 +94,8 @@ void HttpServer::handleClientRequest()
 
     qDebug() << "Received HTTP request:" << request.left(200) << "...";
 
+    QMap<QString, QString> headers = parseHttpHeaders(request);
+
     // Parse HTTP request
     QStringList lines = request.split("\r\n");
     if (lines.isEmpty()) {
@@ -90,41 +115,121 @@ void HttpServer::handleClientRequest()
     QString method = requestParts[0];
     QString path = requestParts[1];
 
-    // Handle POST /camera/{uuid}
-    if (method == "POST" && path.startsWith("/camera/")) {
-        QString uuid = path.mid(8); // Remove "/camera/"
+    if (method == "GET") {
+        handleGetRequest(socket, path, headers);
+        return;
+    }
 
-        if (uuid.isEmpty()) {
-            sendHttpResponse(socket, 400, "Bad Request",
-                             "{\"error\":\"Missing camera UUID\"}");
+    // Existing POST handling logic
+    if (method != "POST") {
+        sendHttpResponse(socket, 405, "Method Not Allowed", "Only POST and GET methods are supported");
+        return;
+    }
+
+    if (!path.startsWith("/camera/")) {
+        sendHttpResponse(socket, 404, "Not Found", "Endpoint not found");
+        return;
+    }
+
+    QString uuid = path.mid(8); // Remove "/camera/"
+    if (uuid.isEmpty()) {
+        sendHttpResponse(socket, 400, "Bad Request", "UUID required");
+        return;
+    }
+
+    CameraParams params = parsePostRequest(request);
+    if (params.cameraUUID.isEmpty()) {
+        sendHttpResponse(socket, 400, "Bad Request", "Invalid JSON or missing required fields");
+        return;
+    }
+
+    emit cameraParametersReceived(params);
+    sendHttpResponse(socket, 200, "OK", "Camera parameters received successfully");
+}
+
+
+void HttpServer::handleGetRequest(QTcpSocket *socket, const QString &path, const QMap<QString, QString> &headers)
+{
+    if (path.startsWith("/stream/")) {
+        QString cameraUUID = path.mid(8); // Remove "/stream/"
+        if (cameraUUID.isEmpty()) {
+            sendHttpResponse(socket, 400, "Bad Request", "Camera UUID required");
             return;
         }
 
-        CameraParams params = parsePostRequest(request, uuid);
-
-        if (!params.isValid()) {
-            sendHttpResponse(socket, 400, "Bad Request",
-                             "{\"error\":\"Invalid camera parameters\"}");
+        if (!m_activeStreams.contains(cameraUUID)) {
+            sendHttpResponse(socket, 404, "Not Found", "Stream not found or not active");
             return;
         }
 
-        // Emit signal with parsed parameters
-        emit cameraParametersReceived(params);
+        if (m_authEnabled) {
+            QString authHeader = headers.value("authorization", "");
+            if (!checkBasicAuth(authHeader)) {
+                sendAuthRequired(socket);
+                return;
+            }
+        }
 
-        // Send success response
-        QJsonObject response;
-        response["status"] = "success";
-        response["message"] = "Camera streaming request received";
-        response["camera_uuid"] = uuid;
+        const StreamInfo &streamInfo = m_activeStreams[cameraUUID];
 
-        sendHttpResponse(socket, 200, "OK", QJsonDocument(response).toJson());
+        qDebug() << "Loading stream template for camera:" << cameraUUID;
+
+        // Load Janus.js from resources
+        QFile janusFile(":/scripts/janus.js");
+        QString janusJsContent;
+        if (janusFile.open(QIODevice::ReadOnly)) {
+            janusJsContent = QString::fromUtf8(janusFile.readAll());
+            janusFile.close();
+        } else {
+            qWarning() << "Failed to load janus.js from resources";
+            sendHttpResponse(socket, 500, "Internal Server Error", "Janus script not found");
+            return;
+        }
+
+        // Use TemplateLoader to generate HTML content
+        QString htmlContent = templateloader::loadSimpleStreamTemplate(
+            streamInfo.params,
+            streamInfo.janusUrl,
+            streamInfo.mountpointId,
+            janusJsContent
+            );
+
+
+        if (htmlContent.isEmpty()) {
+            qWarning() << "Failed to load stream template";
+            sendHttpResponse(socket, 500, "Internal Server Error", "Template loading failed");
+            return;
+        }
+
+        qDebug() << "Stream template loaded successfully for camera:" << cameraUUID;
+        sendHtmlResponse(socket, htmlContent);
     } else {
-        sendHttpResponse(socket, 404, "Not Found",
-                         "{\"error\":\"Endpoint not found\"}");
+        sendHttpResponse(socket, 404, "Not Found", "Page not found");
     }
 }
 
-CameraParams HttpServer::parsePostRequest(const QString &request, const QString &uuid)
+QMap<QString, QString> HttpServer::parseHttpHeaders(const QString &request)
+{
+    QMap<QString, QString> headers;
+    QStringList lines = request.split("\r\n");
+
+    // Skip the first line (request line)
+    for (int i = 1; i < lines.size(); i++) {
+        QString line = lines[i].trimmed();
+        if (line.isEmpty()) break; // End of headers
+
+        int colonPos = line.indexOf(':');
+        if (colonPos > 0) {
+            QString key = line.left(colonPos).trimmed().toLower();
+            QString value = line.mid(colonPos + 1).trimmed();
+            headers[key] = value;
+        }
+    }
+
+    return headers;
+}
+
+CameraParams HttpServer::parsePostRequest(const QString &request)
 {
     CameraParams params;
 
@@ -149,7 +254,7 @@ CameraParams HttpServer::parsePostRequest(const QString &request, const QString 
     QJsonObject jsonObj = doc.object();
 
     // Extract parameters
-    params.cameraUUID = uuid;
+    params.cameraUUID = jsonObj["camera_id"].toString();
     params.customerName = jsonObj["customer_name"].toString();
     params.applianceName = jsonObj["appliance_name"].toString();
     params.cameraId = jsonObj["camera_id"].toString();
@@ -185,5 +290,66 @@ void HttpServer::sendHttpResponse(QTcpSocket *socket, int statusCode,
 
     socket->write(response.toUtf8());
     socket->write(body);
+    socket->disconnectFromHost();
+}
+
+void HttpServer::sendHtmlResponse(QTcpSocket *socket, const QString &htmlContent)
+{
+    QByteArray body = htmlContent.toUtf8();
+
+    QString response = QString(
+                           "HTTP/1.1 200 OK\r\n"
+                           "Content-Type: text/html; charset=utf-8\r\n"
+                           "Content-Length: %1\r\n"
+                           "Connection: close\r\n"
+                           "\r\n")
+                           .arg(body.size());
+
+    socket->write(response.toUtf8());
+    socket->write(body);
+    socket->flush(); // make sure it’s sent immediately
+    socket->disconnectFromHost();
+}
+
+void HttpServer::setCredentials(const QString &username, const QString &password)
+{
+    m_username = username;
+    m_password = password;
+    m_authEnabled = !username.isEmpty() && !password.isEmpty();
+    qDebug() << "Basic auth" << (m_authEnabled ? "enabled" : "disabled");
+}
+
+bool HttpServer::isValidCredentials(const QString &username, const QString &password) const
+{
+    return (username == m_username && password == m_password);
+}
+
+bool HttpServer::checkBasicAuth(const QString &authHeader) const
+{
+    if (!m_authEnabled) return true;
+
+    if (!authHeader.startsWith("Basic ")) return false;
+
+    QString encoded = authHeader.mid(6); // Remove "Basic "
+    QByteArray decoded = QByteArray::fromBase64(encoded.toUtf8());
+    QString credentials = QString::fromUtf8(decoded);
+
+    QStringList parts = credentials.split(":");
+    if (parts.size() != 2) return false;
+
+    return isValidCredentials(parts[0], parts[1]);
+}
+
+void HttpServer::sendAuthRequired(QTcpSocket *socket)
+{
+    QString response = "HTTP/1.1 401 Unauthorized\r\n";
+    response += "WWW-Authenticate: Basic realm=\"Stream Access\"\r\n";
+    response += "Content-Type: text/html; charset=utf-8\r\n";
+    response += "Content-Length: 47\r\n";
+    response += "Connection: close\r\n\r\n";
+    response += "<html><body><h1>401 Unauthorized</h1></body></html>";
+
+    socket->write(response.toUtf8());
+    socket->flush();
     socket->disconnectFromHost();
 }

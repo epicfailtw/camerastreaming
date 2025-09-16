@@ -25,9 +25,6 @@ int main(int argc, char *argv[])
     // Create and configure camera manager
     CameraManager cameraManager;
 
-    // Optional: Set custom Janus URL
-    // cameraManager.setJanusUrl("http://your-janus-server:8088/janus");
-
     // Connect signals for monitoring
     QObject::connect(&cameraManager, &CameraManager::serviceStarted, []() {
         qDebug() << "Camera streaming service started successfully!";
@@ -53,6 +50,8 @@ int main(int argc, char *argv[])
                      [](const QString &error) {
                          qWarning() << "Camera Manager Error:" << error;
                      });
+
+    cameraManager.setStreamCredentials("admin", "Loading4512");
 
     // Start the service
     if (!cameraManager.startService(8080)) {

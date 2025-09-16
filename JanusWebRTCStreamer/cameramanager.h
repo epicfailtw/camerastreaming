@@ -22,6 +22,7 @@ public:
 
     // Configuration
     void setJanusUrl(const QString &url);
+    void setStreamCredentials(const QString &username, const QString &password);
 
 signals:
     void serviceStarted();
@@ -37,6 +38,7 @@ private slots:
     void onJanusError(const QString &error);
     void onHttpServerError(const QString &error);
     void onConnectorDestroyed();
+    void onSessionReady(qint64 sessionId, qint64 handleId);
 
 private:
     HttpServer *m_httpServer;

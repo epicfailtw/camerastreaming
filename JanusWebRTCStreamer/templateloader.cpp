@@ -49,6 +49,42 @@ QString templateloader::loadTemplate(const QString &templatePath)
     return QString::fromUtf8(file.readAll());
 }
 
+QString templateloader::loadSimpleStreamTemplate(const CameraParams &params,
+                                                 const QString &janusUrl,
+                                                 int mountpointId,
+                                                 const QString &janusJsContent)
+{
+    // Load HTML template from file
+    QString htmlTemplate = loadTemplate(":/templates/simple_stream.html");
+    if (htmlTemplate.isEmpty()) {
+        qWarning() << "Failed to load simple HTML template";
+        return QString();
+    }
+
+    // Load JavaScript template from file
+    QString jsTemplate = loadTemplate(":/scripts/simple_stream.js");
+    if (jsTemplate.isEmpty()) {
+        qWarning() << "Failed to load simple JavaScript template";
+        return QString();
+    }
+
+    // Prepare variables for replacement
+    QMap<QString, QString> variables;
+    variables["ROOM_NAME"] = params.roomName;
+    variables["CUSTOMER_NAME"] = params.customerName;
+    variables["APPLIANCE_NAME"] = params.applianceName;
+    variables["JANUS_URL"] = janusUrl;
+    variables["MOUNTPOINT_ID"] = QString::number(mountpointId);
+    variables["JANUS_JS_CONTENT"] = janusJsContent;
+
+    // Process JavaScript template first
+    QString processedJs = processTemplate(jsTemplate, variables);
+    variables["SIMPLE_STREAM_SCRIPT"] = processedJs;
+
+    // Process HTML template
+    return processTemplate(htmlTemplate, variables);
+}
+
 QString templateloader::processTemplate(const QString &templateContent,
                                         const QMap<QString, QString> &variables)
 {

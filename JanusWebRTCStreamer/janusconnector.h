@@ -42,6 +42,9 @@ public:
     qint64 sessionId() const;
     qint64 handleId() const;
 
+    int mountpointId() const { return m_mountpointId; }
+    CameraParams currentParams() const { return m_currentParams; }
+
 public slots:
     void startStreaming();
     void stopStreaming();
